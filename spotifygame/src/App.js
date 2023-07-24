@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import SpotifyFetch from "./component/SpotifyFetch";
 
 function App() {
+  const inputRef = useRef(null);
   const clientId = "548168a4880740b383c0bc3eeb15af1b";
   const secretId = "49ac9bff32114ebd8b64c89daba3bc16";
   const [spotifyAccessToken, setSpotifyAcessToken] = useState();
   const [artist, setArtist] = useState();
+  const [image, setImage] = useState();
   const url = "https://accounts.spotify.com/api/token";
   useEffect(() => {
     const fetchData = async () => {
@@ -26,8 +28,9 @@ function App() {
   }, []);
 
   const artistSearch = async () => {
+    const searchInput = inputRef.current.value;
     const artistId = await fetch(
-      "https://api.spotify.com/v1/search?q=" + "Kanye West" + "&type=artist",
+      "https://api.spotify.com/v1/search?q=" + searchInput + "&type=artist",
       {
         method: "GET",
         headers: {
@@ -36,14 +39,20 @@ function App() {
         },
       }
     );
-    artistId.json().then((response) => console.log(response));
+    artistId.json().then((response) => {
+      setArtist(response.artists.items[0].name);
+      setImage(response.artists.items[0].images[0].url)
+    });
   };
 
   return (
     <div className="App text-3xl">
-      <button onClick={artistSearch}>Guzik</button>
+      <div className="mt-3 flex gap-3 justify-center">
+        <input ref={inputRef} className="border-4 " type="text" placeholder=" Search for artist" />
+        <button className="border-4 rounded-xl p-3 border-black bg-yellow-300" onClick={artistSearch}>Guzik</button>
+      </div>
       {artist}
-      <SpotifyFetch />
+      <img src={image} alt="?"/>
     </div>
   );
 }
