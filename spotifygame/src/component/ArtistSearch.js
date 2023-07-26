@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useStore } from "../stores/store";
 import axios from "axios";
+import ArtistCard from "./ArtistCard";
 const ArtistSearch = () => {
   const inputRef = useRef(null);
   const { token } = useStore();
@@ -13,7 +14,8 @@ const ArtistSearch = () => {
           artist: inputRef.current.value,
         },
       })
-      .then((response) => setArtists(response.data));
+      .then((response) => setArtists(response.data.slice(0, 5)))
+      .then(console.log(artists));
   };
   return (
     <div>
@@ -29,8 +31,15 @@ const ArtistSearch = () => {
         >
           Search
         </button>
+      </div>
+      {artists.length > 0 && <div className="flex gap-10 mt-3 flex-wrap">
+        {" "}
+        {artists.map((artist) => (
+          <div className="" key={artist.id}>
+            <ArtistCard image={artist.images.length > 0 ? artist.images[0].url: ""} name={artist.name} />
           </div>
-          {artists.map(artist => <div key={artist.name}>{ artist.name}</div>)}
+        ))}
+      </div>}
     </div>
   );
 };

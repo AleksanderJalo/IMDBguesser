@@ -14,7 +14,7 @@ function App() {
   },[setToken])
   
   return (
-    <div className="App text-3xl">
+    <div className="App text-3xl bg-slate-400 h-min-full w-min-full">
       <div className="mt-3 flex gap-3 justify-center">
         <ArtistSearch/>
       </div>
