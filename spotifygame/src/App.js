@@ -1,20 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
-import SpotifyFetch from "./component/SpotifyFetch";
+import axios from "axios";
+import ArtistSearch from "./component/ArtistSearch";
+import { useStore } from "./stores/store";
 
 function App() {
-  const inputRef = useRef(null);
-  const [artist, setArtist] = useState();
-  const [image, setImage] = useState();
-
+  const { setToken } = useStore();
+  useEffect(() => {
+    const fetchToken = () => {
+      axios.get("http://localhost:8000/auth").then(res => setToken(res.data));
+    };
+    fetchToken();
+  },[setToken])
+  
   return (
     <div className="App text-3xl">
       <div className="mt-3 flex gap-3 justify-center">
-        <input ref={inputRef} className="border-4 " type="text" placeholder=" Search for artist" />
-        <button className="border-4 rounded-xl p-3 border-black bg-yellow-300" onClick={""}>Guzik</button>
+        <ArtistSearch/>
       </div>
-      {artist}
-      <img src={image} alt="?"/>
     </div>
   );
 }

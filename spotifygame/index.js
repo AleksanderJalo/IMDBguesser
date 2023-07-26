@@ -6,6 +6,8 @@ require("dotenv").config();
 
 const app = express();
 
+app.use(cors());
+
 app.get("/auth", (req, res) => {
   const id = process.env.SPOTIFY_ID;
   const secret = process.env.CLIENT_SECRET;
@@ -22,7 +24,7 @@ app.get("/auth", (req, res) => {
   };
   axios
     .request("https://accounts.spotify.com/api/token", options)
-    .then((response) => res.json(response.data))
+    .then((response) => res.json(response.data.access_token))
     .catch((error) => {
       console.error(error);
     });
