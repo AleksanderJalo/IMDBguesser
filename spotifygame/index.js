@@ -10,25 +10,31 @@ app.use(cors());
 app.get("/topMovies", (req, res) => {
   const apiKey = process.env.API_KEY;
   const url = "https://api.themoviedb.org/3/movie/popular";
+  const page = req.query.page;
   const options = {
+    params: {
+      page: page,
+    },
     headers: {
       accept: "application/json",
-      Authorization:
-        `Bearer ${apiKey}`,
+      Authorization: `Bearer ${apiKey}`,
     },
   };
-  axios.get(url, options).then((response) => res.json(response.data.results)).catch((error) => console.log(error));
+  axios
+    .get(url, options)
+    .then((response) => res.json(response.data.results))
+    .catch((error) => console.log(error));
 });
- 
+
 // app.get("/auth", (req, res) => {
 //   const id = process.env.SPOTIFY_ID;
-//   const secret = process.env.CLIENT_SECRET; 
-//   const options = { 
+//   const secret = process.env.CLIENT_SECRET;
+//   const options = {
 //     method: "POST",
 //     params: {
 //       grant_type: "client_credentials",
 //       client_id: id,
-//       client_secret: secret, 
+//       client_secret: secret,
 //     },
 //     headers: {
 //       "Content-type": "application/x-www-form-urlencoded",
@@ -61,3 +67,4 @@ app.get("/topMovies", (req, res) => {
 app.listen(8000, () => {
   console.log("Server is running");
 });
+  
