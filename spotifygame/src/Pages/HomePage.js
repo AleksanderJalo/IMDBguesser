@@ -6,10 +6,13 @@ import { useStore } from "../stores/store";
 const HomePage = () => {
   const { movies } = useStore();
   return (
-    <div className="min-h-screen w-full flex bg-[#53db90]">
-      <div className="flex flex-col justify-center items-center h-full w-1/2 ">
-        <img src={ImdbLogo} alt="imdb logo" />
-        <div className="text-[#EDF5E1] text-8xl mt-2">GUESSER</div>
+    <div className="min-h-screen w-full flex bg-[#53db90] font-robot">
+      <div className="flex flex-col justify-center items-center h-full w-1/2 gap-12">
+        <div className="flex flex-col justify-items-center bg-[#05386B] p-6 border-8 border-black">
+          <img src={ImdbLogo} alt="imdb logo" />
+          <div className="text-[#EDF5E1] text-8xl mt-2 ">GUESSER</div>
+              </div>
+              <div className="text-6xl px-6 text-[#05386B] font-frosh">GUESS WHICH MOVIE IS BETTER!!!</div>
       </div>
       {movies.length > 22 && (
         <div className="w-1/2 h-full flex flex-col justify-center items-center gap-16 bg-[#05386B] font-roboto">
@@ -34,13 +37,13 @@ const HomePage = () => {
               movieImg={`https://image.tmdb.org/t/p/original/${movies[22].backdrop_path}`}
             >
               {" "}
-              CHOOSE A CATEGORY 
+              CHOOSE A CATEGORY
             </CategoryModal>
             <CategoryModal
               movieImg={`https://image.tmdb.org/t/p/original/${movies[24].backdrop_path}`}
             >
               {" "}
-              MOST POPULAR TV SHOWS
+              MOST POPULAR TV
             </CategoryModal>
           </div>
         </div>
