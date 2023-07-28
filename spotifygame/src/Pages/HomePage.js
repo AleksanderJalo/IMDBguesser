@@ -1,19 +1,62 @@
-import React from 'react'
-
+import React from "react";
+import ImdbLogo from "../images/imdblogo.png";
+import { useStore } from "../stores/store";
+import CategoryModal from "../component/CategoryModal";
 const HomePage = () => {
+  const { movies } = useStore();
   return (
-    <div>HomePage</div>
-  )
-}
+    <div className="h-min-screen w-full bg-black flex flex-col justify-center items-center">
+      <div className="w-3/4 flex flex-col gap-3 h-2/5 justify-center">
+        <img src={ImdbLogo} alt="logo" />
+        <div className="text-white font-roboto text-4xl">GUESSER</div>
+      </div>
+      <div className="h-3/5 flex flex-col gap-6 w-full items-center p-5">
+        <div className="text-white text-2xl border-2 border-white px-3 py-3 w-full">
+          CHOOSE CATEGORY
+        </div>
+        {movies.length > 22 && (
+          <div className=" flex flex-col w-full items-center">
+            <div className="w-full h-1/2 flex">
+              <CategoryModal
+                movieImg={`https://image.tmdb.org/t/p/original/${movies[3].backdrop_path}`}
+              >
+                MOST POPULAR MOVIES{" "}
+              </CategoryModal>
+              <CategoryModal
+                movieImg={`https://image.tmdb.org/t/p/original/${movies[6].backdrop_path}`}
+              >
+                TOP RATED MOVIES{" "}
+              </CategoryModal>
+            </div>
+            <div className="w-full h-1/2 flex">
+              <div className="w-1/2">
+                <CategoryModal
+                  movieImg={`https://image.tmdb.org/t/p/original/${movies[21].backdrop_path}`}
+                >
+                  CHOOSE GENRE{" "}
+                </CategoryModal>
+              </div>
+              <div className="w-1/2">
+                <CategoryModal
+                  movieImg={`https://image.tmdb.org/t/p/original/${movies[18].backdrop_path}`}
+                >
+                  MOST POPULAR SHOWS
+                </CategoryModal>
+              </div>
+            </div>
+            <div className="h-1/2 flex">
+              <div className="w-1/2 h-full"></div>
+              <div></div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
-export default HomePage
+export default HomePage;
 
-// import React from "react";
-// import ImdbLogo from "../images/imdblogo.png";
-// import CategoryModal from "../component/CategoryModal";
-
-// import { useStore } from "../stores/store";
-// const HomePage = () => {
 //   const { movies } = useStore();
 //   return (
 //     <div className="min-h-screen w-full flex bg-black font-robot">
