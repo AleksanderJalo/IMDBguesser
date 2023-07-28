@@ -26,6 +26,18 @@ app.get("/topMovies", (req, res) => {
     .catch((error) => console.log(error));
 });
 
+app.get("/genres", (req, res) => {
+  const apiKey = process.env.API_KEY;
+  const url = "https://api.themoviedb.org/3/genre/movie/list";
+  const options = {
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    }
+  }
+  axios.get(url, options).then(response => res.json(response.data.genres)).catch((error) => console.log(error));
+})
+
 // app.get("/auth", (req, res) => {
 //   const id = process.env.SPOTIFY_ID;
 //   const secret = process.env.CLIENT_SECRET;

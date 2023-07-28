@@ -2,8 +2,11 @@ import React from "react";
 import ImdbLogo from "../images/imdblogo.png";
 import { useStore } from "../stores/store";
 import CategoryModal from "../component/CategoryModal";
-const HomePage = () => {
-  const { movies } = useStore();
+const HomePage = (props) => {
+  const { movies, genres } = useStore();
+  const genreHandler = () => {
+    props.pageHandler("GenrePage");
+  }
   return (
     <div className="h-min-screen w-full bg-black flex flex-col justify-center items-center">
       <div className="w-3/4 flex flex-col gap-3 h-2/5 justify-center">
@@ -11,7 +14,7 @@ const HomePage = () => {
         <div className="text-white font-roboto text-4xl">GUESSER</div>
       </div>
       <div className="h-3/5 flex flex-col gap-6 w-full items-center p-5">
-        <div className="text-white text-2xl border-2 border-white px-3 py-3 w-full">
+        <div className="text-white text-2xl border-2 border-white px-3 py-3 w-full font-roboto">
           CHOOSE CATEGORY
         </div>
         {movies.length > 22 && (
@@ -31,6 +34,7 @@ const HomePage = () => {
             <div className="w-full h-1/2 flex">
               <div className="w-1/2">
                 <CategoryModal
+                  onClick={genreHandler}
                   movieImg={`https://image.tmdb.org/t/p/original/${movies[21].backdrop_path}`}
                 >
                   CHOOSE GENRE{" "}
