@@ -5,6 +5,7 @@ import CategoryModal from "../component/CategoryModal";
 const HomePage = (props) => {
   const { movies, genres } = useStore();
   const genreHandler = () => {
+    console.log(movies)
     props.pageHandler("GenrePage");
   }
   return (

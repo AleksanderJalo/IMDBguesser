@@ -4,10 +4,11 @@ import axios from "axios";
 import { useStore } from "./stores/store";
 import HomePage from "./Pages/HomePage";
 import MovieGenrePage from "./Pages/MovieGenrePage";
+import GamePage from "./Pages/GamePage";
 
 function App() {
   const { addMovies, setGenres } = useStore();
-  const [whichPage, setWhichPage] = useState("HomePage");
+  const [whichPage, setWhichPage] = useState("GamePage");
   useEffect(() => {
     const fetchMovies = (page) => {
       axios
@@ -39,7 +40,8 @@ function App() {
   return (
     <div className="App min-h-screen flex w-full ">
       {whichPage === "HomePage" && <HomePage pageHandler={switchPage} />}
-      {whichPage === "GenrePage" && <MovieGenrePage/>}
+      {whichPage === "GenrePage" && <MovieGenrePage />}
+      {whichPage === "GamePage" && <GamePage/>}
     </div>
   );
 }
