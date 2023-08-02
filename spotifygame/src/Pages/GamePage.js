@@ -6,8 +6,10 @@ const GamePage = () => {
   const { movies } = useStore();
   const [firstMovie, setFirstMovie] = useState();
   const [secondMovie, setSecondMovie] = useState();
+  const [didLoose, setDidLoose] = useState(false);
   const [firstMovieScore, setFirstMovieScore] = useState();
   const [secondMovieScore, setSecondMovieScore] = useState();
+  const [whichClickedFirst, setWhichClickedFirst] = useState();
   const [score, setScore] = useState(0);
   const [didBothSpin, setDidBothSpin] = useState(false);
   const [movieClicked, setMovieClicked] = useState(false);
@@ -16,25 +18,42 @@ const GamePage = () => {
     setSecondMovie(movies[Math.floor(Math.random() * movies.length)]);
   }, []);
   const afterShow = (isFirst) => {
+    console.log("aa")
+    setDidBothSpin(true);
     if (isFirst) {
       setSecondMovieScore(secondMovie.vote_average);
     } else {
       setFirstMovieScore(firstMovie.vote_average);
     }
-    setDidBothSpin(true)
   };
   const guess = (isFirst) => {
     if (!movieClicked) {
       if (isFirst) {
         setFirstMovieScore(firstMovie.vote_average);
+        setWhichClickedFirst("up/left");
       } else {
         setSecondMovieScore(secondMovie.vote_average);
+        setWhichClickedFirst("down/right");
       }
     }
     setMovieClicked(true);
   };
-  const check = () => { 
-    console.log("check")
+  const check = (isFirst) => {
+    console.log("a");
+    console.log(isFirst)
+    if (whichClickedFirst === "up/left") {
+      if (firstMovieScore >= secondMovieScore) {
+        setScore((prev) => prev + 1);
+      } else {
+        setDidLoose(true);
+      }
+    } else {
+      if (secondMovieScore >= firstMovieScore) {
+        setScore((prev) => prev + 1);
+      } else {
+        setDidLoose(true);
+      }
+    }
   };
   return (
     <div className="flex flex-col h-min-screen  w-full bg-black text-white  items-center relative gap-1">
@@ -44,7 +63,8 @@ const GamePage = () => {
           isFirstMovie={true}
           afterShow={afterShow}
           didBothSpin={didBothSpin}
-          check = {check}
+          check={check}
+          whichClickedFirst={whichClickedFirst}
         />
       )}
       {secondMovieScore && (
@@ -53,7 +73,8 @@ const GamePage = () => {
           isFirstMovie={false}
           afterShow={afterShow}
           didBothSpin={didBothSpin}
-          check = {check}
+          whichClickedFirst={whichClickedFirst}
+          check={check}
         />
       )}
       <div className="absolute top-3 left-3 bg-white px-2 py-1 text-black z-10 border-2 border-black">{`Score: ${score}`}</div>
