@@ -13,26 +13,39 @@ const GamePage = () => {
   const [score, setScore] = useState(0);
   const [didBothSpin, setDidBothSpin] = useState(false);
   const [movieClicked, setMovieClicked] = useState(false);
+  const [phase, setPhase] = useState("start");
   useEffect(() => {
     setFirstMovie(movies[Math.floor(Math.random() * movies.length)]);
     setSecondMovie(movies[Math.floor(Math.random() * movies.length)]);
   }, []);
-  const afterShow = (isFirst) => {
-    console.log("aa")
-    setDidBothSpin(true);
-    if (isFirst) {
-      setSecondMovieScore(secondMovie.vote_average);
-    } else {
-      setFirstMovieScore(firstMovie.vote_average);
-    }
+
+  const afterShow = () => {
+    setPhase("showScoreTwo");
   };
+  useEffect(() => {
+    if (phase === "showScore") {
+      if (whichClickedFirst === "up/left") {
+        setFirstMovieScore(firstMovie.vote_average);
+      } else {
+        setSecondMovieScore(secondMovie.vote_average)
+      }
+    }
+    if (phase === "showScoreTwo") {
+      if (whichClickedFirst === "down/right") {
+        setFirstMovieScore(firstMovie.vote_average);
+      } else {
+        setSecondMovieScore(secondMovie.vote_average)
+      }
+    }
+  })
+
   const guess = (isFirst) => {
     if (!movieClicked) {
       if (isFirst) {
-        setFirstMovieScore(firstMovie.vote_average);
+        setPhase("showScore");
         setWhichClickedFirst("up/left");
       } else {
-        setSecondMovieScore(secondMovie.vote_average);
+        setPhase("showScore");
         setWhichClickedFirst("down/right");
       }
     }

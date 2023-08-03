@@ -16,11 +16,14 @@ const ShowScore = (props) => {
       }, (i + 1) * 30);
       delay += (i + 1) * 30;
     }
-    if (numberAfterComa !== 0) {
+    if (numberAfterComa !== 0) { 
       setTimeout(() => {
         for (let i = 0; i < numberAfterComa; i++) {
+          if (i + 1 === numberAfterComa) {
+            props.afterShow();
+          }
           setTimeout(() => {
-            setSecondNumber((prev) => prev + 1);
+            setSecondNumber((prev) => prev + 1); 
           }, (i + 1) * 30);
         }
       }, delay);
